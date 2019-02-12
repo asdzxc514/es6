@@ -23,7 +23,8 @@ log('hello', 'Seoul');    // hello Seoul
 ###### ex)  function(value)  {  return value }    ===   (value) => { return value }    
   
   
-* #### **코드설명**  
+  
+## 코드설명 
 
 1. const 로 선언된 array 는 (...elements) 인자를 받아서 elements 를 리턴합니다.  
 ...elements 에서 앞에 붙은 ... 은 인자를 강제적으로 배열로 받는 다는 뜻 입니다.  
