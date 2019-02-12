@@ -20,7 +20,7 @@ log('hello', 'Seoul');    // hello Seoul
 
 
 `arrow function :  ( ) => { }` 로 실행하며 ( ) 의 값은 인자로 받고, { } 은 함수의 실행구문을 넣습니다.  
-ex)  function(value)  {  return value }    ===   (value) => { return value }    
+<span style="color:#777777">ex)  function(value)  {  return value }    ===   (value) => { return value }</span>  
   
   
   
