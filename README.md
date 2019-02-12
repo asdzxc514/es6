@@ -27,8 +27,8 @@ ex)  function(value)  {  return value }    ===   (value) => { return value }<br>
 
 * #### **코드설명**
 
-1.  const 로 선언된 array 는 (...elements) 인자를 받아서 elements 를 리턴합니다.<br>
+1) const 로 선언된 array 는 (...elements) 인자를 받아서 elements 를 리턴합니다.<br>
 ...elements 에서 앞에 붙은 ... 은 인자를 강제적으로 배열로 받는 다는 뜻 입니다.<br>
-2. array(1, 2, 3)  으로  array 함수를 실행 했다면  결과값은 배열로 변경되어 [1, 2, 3] 이 됩니다. <br>
-3. 마찬가지로 const 로 선언된 log 는 ...args 를 인자로 받게됩니다. <br>
-4. log 함수를 실행하면 'hello' , 'Seoul' 이 배열로 변경되어 출력되는 것을 확인 할 수 있습니다. <br><br>
+2) array(1, 2, 3)  으로  array 함수를 실행 했다면  결과값은 배열로 변경되어 [1, 2, 3] 이 됩니다. <br>
+- 마찬가지로 const 로 선언된 log 는 ...args 를 인자로 받게됩니다. <br>
+- log 함수를 실행하면 'hello' , 'Seoul' 이 배열로 변경되어 출력되는 것을 확인 할 수 있습니다. <br><br>
