@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6</title>
+</head>
+<body>
+<script>
+
+
+    function factory_movie(title){
+        return {
+            get_title : function(){
+                return title;
+            },
+            set_title : function(_title){
+                if(typeof _title === 'string'){
+                    title = _title;
+                } else { 
+                    alert('문자열이여야 한다!');
+                }
+            }
+        }
+    }
+
+    //// 이렇게 써도 똑같음
+    // var factory_movie = function(title){
+    //     return {
+    //         get_title : function(){
+    //             return title;
+    //         },
+    //         set_title : function(_title){
+    //             if(typeof _title === 'string'){
+    //                 title = _title;
+    //             } else { 
+    //                 alert('문자열이여야 한다!');
+    //             }
+    //         }
+    //     }
+    // }
+
+    // ghost = factory_movie('Ghost in the shell');
+    // matrix = factory_movie('Matrix');
+
+    // console.log(ghost.get_title());
+    // console.log(matrix.get_title());
+    // ghost.set_title('공각기동대');
+    // matrix.set_title(4585646);
+
+    // console.log(ghost.get_title());
+    // console.log(matrix.get_title());
+
+// ==========================================================================================================
+
+
+    // 문제발생
+    var arr = [];
+    for(var i=0; i<5; i++){  
+        arr[i] = function(){   
+        return i;
+        }
+    }
+    /*
+
+    i = 0; 
+    function(){ return i; }
+    i = 1; 
+    function(){ return i; }
+    ..
+    i = 5; //Loop end 
+    function(){ return i; }
+
+    위의 Loop 가 끝난 시점이 5이기 때문에 5인상태에서 5번 for문이 돌아서 5가 5개 나온다!!!! 
+
+    */
+
+
+
+
+    // 문제해결1 - 새로운 스코프를 추가하여 반복마다 값을 저장하는 방식 (즉시 실행함수 사용)
+    var arr = [];
+    for(var i=0; i<5; i++){
+        arr[i] = function(id){
+            return function(){
+                return id;
+            }
+        }(i);     
+    }
+    /*
+
+    i = 0; 
+    function(id){ return id; }(0)
+    i = 1; 
+    function(id){ return id; }(1)
+    ..
+    i = 5; //Loop end 
+    function(id){ return id; }(5) => arr = [0, 1, 2, 3, 4];
+
+    */
+
+
+    // 문제해결2 - ES6 블록 스코프를 이용한 방식
+    var arr = [];
+    for(let i=0; i<5; i++){
+        arr[i] = function(){
+        return i;
+        }
+    }
+
+
+
+
+
+    // for(var index in arr){
+    //     console.log(arr[index]());
+    // }
+
+
+
+
+// ==========================================================================================================
+console.log('============================= makeFunc');
+
+
+
+    // 1
+    function makeFunc(){
+        var name = "MDN 클로저 예제1";
+        function displayName(){ 
+            console.log(name); 
+        };
+        return displayName;
+    };
+
+    var myFunc = makeFunc();
+    myFunc();
+
+
+    // 2
+    function makeFunc2(){    
+        var name2 = "MDN 클로저 예제2";
+        return function displayName2(){         
+            console.log(name2);         
+        };    
+    };
+    var myFunc2 = makeFunc2();   // myFunc2은 makeFunc2이 실행될 때 생성된 displayName2 함수의 인스턴스에 대한 참조
+    myFunc2();  
+
+    // Q. 참조를 새로운 변수에 담아 사용하지않고, 다른 방식으로 사용 할 수 있는지?
+
+
+    // 3
+    (function makeFunc3(){    
+        var name3 = "MDN 클로저 예제3";
+        return function displayName3(){         
+            console.log(name3);         
+        }();    
+    }());
+
+    // Q. makeFunc3 즉시실행 함수 () 감싸지않으면 오류로 체크되는 이유는?
+
+
+
+// ==========================================================================================================
+console.log('============================= counter');
+
+// 클로저를 이용해서 프라이빗 메소드 (private method) 흉내내기
+
+
+// 1.
+var counter = (function() {
+
+    var privateCounter = 0; // 지역변수 (프라이빗 아이템1)
+
+    function changeBy(val) {  // changeBy 함수 (프라이빗 아이템2)
+        privateCounter += val;
+    }
+    return {
+        increment: function() {
+            changeBy(1);
+        },
+        decrement: function() {
+            changeBy(-1);
+        },
+        value: function() {
+            return privateCounter;
+        }
+    };   
+
+})();
+
+
+console.log(counter.value()); // logs 0
+
+counter.increment();
+counter.increment();
+console.log(counter.value()); // logs 2
+
+counter.decrement();
+console.log(counter.value()); // logs 1
+
+
+// 프라이빗 아이템들은 return 안에있는 세 개의 퍼블릭 함수(increment/decrement/value)를 통해서만 접근이되어야만 한다!
+// 세 개의 퍼블릭 함수는 '클로저' 이다
+
+// 즉시 실행함수라서 2번 예제처럼 console.log(counter1.value()); 처럼 다른 변수에 담아서 사용 불가능!
+// var counter11 = counter();
+// counter11.increment();
+// console.log(counter11.value());  // 
+
+
+
+
+console.log('============================= counter2');
+
+    // 2.
+    var makeCounter = function(){
+        var privateCounter = 0;
+
+        function changeBy(val){
+            privateCounter += val;
+        }
+        return {
+            increment: function(){
+                changeBy(1);
+            },
+            decrement: function(){
+                changeBy(-1);
+            },
+            value: function(){
+                return privateCounter;
+            }
+        }  
+    };
+    
+    var counter1 = makeCounter();
+    var counter2 = makeCounter();
+
+    console.log(counter1.value()); /* 0 */
+
+    counter1.increment();
+    counter1.increment();
+
+    console.log(counter1.value()); /* 2 */
+
+    counter1.decrement();
+
+    console.log(counter1.value()); /* 1 */
+    console.log(counter2.value()); /* 0 */
+
+
+    // makeCounter 에 담긴 내용이 즉시 실행함수여야만
+    // 1번 예제처럼 console.log(makeCounter.value());   makeCounter로 접근가능 
+
+
+
+
+    // 결론
+    /*
+
+    1. 즉시실행 함수를 담아서 사용할 경우 
+       counter를 통해 안에 있는 함수로 접근이 가능하지만 
+    
+    2. 그냥 함수가 담아있을 경우
+       새로운 변수에 makeCounter를 담아서 안에있는 함수로 접근이 가능하다 !
+
+    */
+</script>
+</body>
+</html>

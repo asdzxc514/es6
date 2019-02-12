@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6</title>
+</head>
+<body>
+<script>
+
+const array = (...elements) => { 
+    return elements; 
+}; 
+
+array(1,2,3);    // [1, 2, 3] 
+
+const log = (...args) => { 
+    document.write(...args); 
+} 
+
+log('hello', ' Seoul');    // hello Seoul
+
+
+
+// =====================================================================================
+
+console.log( 'ES5 return a+b');
+//ES5
+var Test1 = function(a,b) { return a+b; }
+console.log(Test1(1,2));  //3 
+
+console.log( 'ES6 return a+b');
+//ES6
+let Test2 = (a,b) => {
+	let result = a+b;
+    return result;
+}
+console.log(Test2(1,2));  //3 
+
+
+//ES6
+let Test3 = (a,b) => (a+b);
+console.log(Test3(1,2));   //3
+
+
+// =====================================================================================
+
+console.log( 'ES5 function');
+//ES5
+var aaa = 1;
+console.log(this == window);  // true
+console.log(this.aaa);   // 1 
+
+function test1() {
+  console.log(this == window);  // true
+}
+
+var object1 = {
+  test : function() {
+    console.log(this == object1);  // true 
+    (function() {
+       console.log(this == object1);  // false
+       console.log(this.aaa);  // 1 
+    }())    
+  } ,
+  test2 : function() {
+      console.log(this == object1);  // true 
+      var that = this;   
+      (function() {
+         console.log(that == object1);  // true
+      })()
+  }
+}
+
+test1();
+object1.test();
+object1.test2();
+
+
+console.log( 'ES6 function');
+//ES6
+let a = 1; 
+let object2 = { 
+    test : function() { console.log(this == object2); // true 
+        (() => { console.log(this == object2); // true 
+            console.log(this.a); // undefined 
+        })() 
+    }, 
+    test2 : function() { 
+        console.log(this == object2); // true 
+        (() => { console.log(this == object2); // true 
+        })() 
+    } 
+} 
+object2.test(); 
+object2.test2();
+
+
+// =====================================================================================
+
+
+</script>
+</body>
+</html>
