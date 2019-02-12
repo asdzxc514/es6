@@ -2,9 +2,8 @@
 
 `Babel` ES6코드를 ES5로 변환하는 transpiler다  
 `const` ES6 의 새로운 문법으로 const 로 선언된 값은 외부에서 직접적으로 변경할 수 없습니다.    
-
-
-
+  
+  
 ```
 const array = (...elements) => { 
     return elements; 
@@ -22,8 +21,8 @@ log('hello', 'Seoul');    // hello Seoul
 
 `arrow function :  ( ) => { }` 로 실행하며 ( ) 의 값은 인자로 받고, { } 은 함수의 실행구문을 넣습니다.  
 ###### ex)  function(value)  {  return value }    ===   (value) => { return value }    
-
-
+  
+  
 * #### **코드설명**  
 
 1. const 로 선언된 array 는 (...elements) 인자를 받아서 elements 를 리턴합니다.  
