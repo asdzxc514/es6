@@ -26,6 +26,26 @@ for(let i=0; i<list.length; i++){
 // =====================================================================================
 
 
+
+function Person(n,a){
+  this.name = n;
+  this.age = a;
+}
+
+Person.prototype.setOlder = function(){
+  this.age += 1;
+}
+Person.prototype.getAge = function(){
+  return this.age;
+}
+
+var gomu = new Person('고무곰', 30);
+var iu = new Person('아이유', 27);
+
+
+console.log(gomu.__proto__.setOlder());
+console.log(gomu.__proto__.getAge());
+
 </script>
 </body>
-</html>
+</html> 
